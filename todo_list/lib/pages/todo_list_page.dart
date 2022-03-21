@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
-class TodoListPage extends StatelessWidget {
-  const TodoListPage({Key? key}) : super(key: key);
+class TodoListPage extends StatefulWidget {
+  TodoListPage({Key? key}) : super(key: key);
+
+  @override
+  State<TodoListPage> createState() => _TodoListPageState();
+}
+
+class _TodoListPageState extends State<TodoListPage> {
+  List<String> todos = [];
+
+  final TextEditingController todoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +23,10 @@ class TodoListPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: todoController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Adicione uma tarefa",
                         hintText: "Ex. Estudar flutter",
@@ -27,7 +37,12 @@ class TodoListPage extends StatelessWidget {
                     width: 8,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      String text = todoController.text;
+                      setState(() {
+                        todos.add(text);
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: const Color(0xff00d7f3),
                       padding: const EdgeInsets.all(14),
@@ -45,18 +60,15 @@ class TodoListPage extends StatelessWidget {
               ListView(
                 shrinkWrap: true,
                 children: [
-                  ListTile(
-                    title: Text("Tarefa 1"),
-                    subtitle: Text("20/11/2020"),
-                    leading: Icon(Icons.person),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text("Tarefa 2"),
-                    subtitle: Text("21/11/2020"),
-                    leading: Icon(Icons.save),
-                    onTap: () {},
-                  ),
+                  for (String todo in todos)
+                    ListTile(
+                      title: Text(todo),
+                      subtitle: Text("20/11/2020"),
+                      leading: Icon(Icons.person),
+                      onTap: () {
+                        print(todo);
+                      },
+                    ),
                 ],
               ),
               const SizedBox(

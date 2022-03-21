@@ -14,41 +14,45 @@ class TodoListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(4),
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 2),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              DateFormat('dd/MM/yyyy - HH:mm').format(todo.dateTime),
-              style: const TextStyle(
-                fontSize: 12,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Slidable(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(4),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                DateFormat('dd/MM/yyyy - HH:mm').format(todo.dateTime),
+                style: const TextStyle(
+                  fontSize: 12,
+                ),
               ),
-            ),
-            Text(
-              todo.title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+              Text(
+                todo.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        actionExtentRatio: 0.20,
+        actionPane: const SlidableDrawerActionPane(),
+        secondaryActions: [
+          IconSlideAction(
+            color: Colors.red,
+            icon: Icons.delete,
+            caption: "Deletar",
+            onTap: () {},
+          ),
+        ],
       ),
-      actionPane: const SlidableDrawerActionPane(),
-      secondaryActions: [
-        IconSlideAction(
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () {},
-        ),
-      ],
     );
   }
 }

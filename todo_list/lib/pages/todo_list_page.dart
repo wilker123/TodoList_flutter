@@ -48,7 +48,9 @@ class _TodoListPageState extends State<TodoListPage> {
                         setState(() {
                           Todo newTodo =
                               Todo(title: text, dateTime: DateTime.now());
-                          todos.add(newTodo);
+                          if (newTodo.title != "") {
+                            todos.add(newTodo);
+                          }
                         });
                         todoController.clear();
                       },

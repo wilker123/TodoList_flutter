@@ -18,6 +18,16 @@ class _TodoListPageState extends State<TodoListPage> {
   Todo? deletedTodo;
   int? deletedTodoPos;
 
+  @override
+  void initState() {
+    super.initState();
+    todoRepository.getTodoList().then((value) {
+      setState(() {
+        todos = value;
+      });
+    });
+  }
+
   final TextEditingController todoController = TextEditingController();
 
   @override
@@ -118,6 +128,7 @@ class _TodoListPageState extends State<TodoListPage> {
     setState(() {
       todos.remove(todo);
     });
+    todoRepository.saveTodoList(todos);
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -135,6 +146,7 @@ class _TodoListPageState extends State<TodoListPage> {
             setState(() {
               todos.insert(deletedTodoPos!, deletedTodo!);
             });
+            todoRepository.saveTodoList(todos);
           },
         ),
         duration: const Duration(seconds: 5),
@@ -176,5 +188,6 @@ class _TodoListPageState extends State<TodoListPage> {
     setState(() {
       todos.clear();
     });
+    todoRepository.saveTodoList(todos);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/repositorys/todo_repository.dart';
 
 import '../models/todo.dart';
 import '../widgets/todo_list_item.dart';
@@ -11,6 +12,8 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
+  final TodoRepository todoRepository = TodoRepository();
+
   List<Todo> todos = [];
   Todo? deletedTodo;
   int? deletedTodoPos;
@@ -53,6 +56,7 @@ class _TodoListPageState extends State<TodoListPage> {
                           }
                         });
                         todoController.clear();
+                        todoRepository.saveTodoList(todos);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color(0xff00d7f3),
